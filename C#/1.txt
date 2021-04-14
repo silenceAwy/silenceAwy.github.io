@@ -1,0 +1,23 @@
+.net webapi 和 .net core webapi 获取客户端IP的方式
+
+public static string GetClientIp(HttpRequestMessage request)
+        {
+            if (request.Properties.ContainsKey("MS_HttpContext"))
+            {
+                return ((HttpContextWrapper)request.Properties["MS_HttpContext"]).Request.UserHostAddress;
+            }
+            else if (HttpContext.Current != null)
+            {
+                return HttpContext.Current.Request.UserHostAddress;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+  var ip = context.HttpContext.Request.Headers["X-Forwarded-For"].ToString();
+                        if (string.IsNullOrEmpty(ip))
+                        {
+                            ip = context.HttpContext.Connection.RemoteIpAddress?.ToString();
+                        }       
